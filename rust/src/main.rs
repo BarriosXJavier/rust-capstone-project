@@ -40,7 +40,9 @@ fn wallet_client(name: &str) -> bitcoincore_rpc::Result<Client> {
 // TODO: Create/Load the wallets. Have logic to optionally create/load them if they
 // do not exist or are not loaded already.
 fn create_or_load_wallet(rpc: &Client, name: &str) -> bitcoincore_rpc::Result<()> {
-    if rpc.create_wallet(name, None, None, None, None).is_ok() { return Ok(()) }
+    if rpc.create_wallet(name, None, None, None, None).is_ok() {
+        return Ok(());
+    }
     match rpc.load_wallet(name) {
         Ok(_) => Ok(()),
         Err(e) if e.to_string().contains("already loaded") => Ok(()),
